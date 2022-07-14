@@ -242,6 +242,11 @@ qemu-img resize -f qcow2 disk1 2G
 virsh attach-disk centos7 --source /var/lib/libvirt/images/disk1 --target vdb --persistent
 ```
 
+![image](https://user-images.githubusercontent.com/83824403/178957231-6eaa0d1b-9c48-40d1-82bc-10ed110234b8.png)
+
+
+
+
 
 - Remove disk from VM :
 
