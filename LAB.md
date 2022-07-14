@@ -99,19 +99,14 @@ virsh # vcpupin centos7
 ```
 
 virsh # vcpupin centos7 0 0
-virsh # vcpupin centos7 1 1
+virsh # vcpupin centos7 0 2
 ```
 
 
 - Kiểm tra lại :
 
-```
-virsh # vcpupin centos7 
- VCPU   CPU Affinity
-----------------------
- 0      0
- 1      1
-```
+![image](https://user-images.githubusercontent.com/83824403/178945801-6b1ba31f-5a62-4873-a2d9-a6bdee2dd9ba.png)
+
 
 
 ## 5. limit CPU
@@ -154,47 +149,33 @@ virsh setvcpus <VM-name> <max-number-of-CPUs> [option]
 --live : thay đổi live
 ```
 
+![image](https://user-images.githubusercontent.com/83824403/178946469-038f1756-8e1d-437e-bacc-5e70e1334d93.png)
+
 
 
 ## 6. limit bandwidth :
 
 Để limit bw, ta thêm phần config bandwidth vào interface trong file cấu hình xml của VM, cụ thể như sau :
 
-- vào thay đổi cấu hình : virsh edit centos7
+- vào thay đổi cấu hình : virsh edit centos
 
-- tìm phần cấu hình interfaces thay đổi như sau, giới hạn tốc độ up/down ~ 100KB/s  :
-
-
+- tìm phần cấu hình interfaces thay đổi như sau, giới hạn tốc độ up/down ~ 88KB/s  :
 
 
-<interface type='bridge'>
-      <mac address='52:54:00:cd:1f:44'/>
-      <source bridge='virbr0'/>
+
+
+  <interface type='bridge'>
       <bandwidth>
-        <inbound average='100' peak='100' burst='100'/>
-        <outbound average='100' peak='1000' burst='100'/>
+        <inbound average='88' peak='88' burst='88'/>
+        <outbound average='88' peak='88' burst='88'/>
       </bandwidth>
+      <mac address='52:54:00:dd:61:59'/>
+      <source bridge='virbr0'/>
       <model type='virtio'/>
       <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
-    </interface>
+  </interface>
 
 
-
-- Kiểm tra lại bằng speedtest :
-
-```
-root@localhost ~]# speedtest
-
-   Speedtest by Ookla
-
-     Server: ZHOST.VN - Ha Noi (id = 34705)
-        ISP: FPT Telecom
-    Latency:     1.96 ms   (1.18 ms jitter)
-   Download:     0.76 Mbps (data used: 364.0 kB)                               
-     Upload:     0.77 Mbps (data used: 1.1 MB)                               
-Packet Loss:     0.0%
- Result URL: https://www.speedtest.net/result/c/fbba13ef-9a09-47c9-9172-cab626123c22
- ```
 
 
 
@@ -202,13 +183,8 @@ Packet Loss:     0.0%
 
 - listing interface :
 
-```
-tule@tule:~$ virsh domiflist centos7 
- Interface   Type     Source   Model    MAC
------------------------------------------------------------
- vnet0       bridge   virbr0   virtio   52:54:00:cd:1f:44
+![image](https://user-images.githubusercontent.com/83824403/178954155-61001289-946a-4a86-a289-67934120c9d3.png)
 
-```
 
 - add NIC to VM :
 
@@ -228,14 +204,8 @@ virsh detach-interface --domain [tên VM] --type [loại card mạng] --mac [đ�
 
 - Listing disk :
 
-```
-tule@tule:~$ virsh domblklist centos7 
- Target   Source
--------------------------------------------------
- vda      /var/lib/libvirt/images/centos7.qcow2
- sda      -
+![image](https://user-images.githubusercontent.com/83824403/178956285-8bb0faa9-169f-4b91-9360-ca0bb9884398.png)
 
-```
 
 - Create new disk ( tạo ổ format  với dung lượng 1GB ) :
 
