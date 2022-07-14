@@ -76,6 +76,7 @@ virt-install --virt-type=kvm --os-type=Linux --name centos --ram 1024 --vcpus=1 
 ```
 
 
+![image](https://user-images.githubusercontent.com/83824403/178938540-43c077f5-aa0d-40e9-a36e-7e7d1168db1f.png)
 
 
 
