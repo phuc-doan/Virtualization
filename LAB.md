@@ -214,10 +214,14 @@ cd /var/lib/libvirt/images
 sudo qemu-img create -f raw centos-1G 1G
 ```
 
+![image](https://user-images.githubusercontent.com/83824403/178957670-9d860213-a718-4ab1-b72b-1acbd7653588.png)
+
+
+
 - kiểm tra disk vừa tạo :
 
 ```
-qemu-img info disk1
+qemu-img info ubuntu-box1-vm-disk1-1G
 ```
 
 
@@ -225,7 +229,7 @@ qemu-img info disk1
 - Convert disk sang định dạng raw :
 
 ```
-qemu-img convert -f qcow2 -O  raw disk1 disk1.img
+qemu-img convert -f qcow2 -O  raw ubuntu-box1-vm-disk1-1G ubuntu-box1-vm-disk1-1G.img
 
 ```
 
@@ -239,20 +243,23 @@ qemu-img resize -f qcow2 disk1 2G
 - Add disk to VM :
 
 ```
-virsh attach-disk centos7 --source /var/lib/libvirt/images/disk1 --target vdb --persistent
+virsh attach-disk centos7 --source /var/lib/libvirt/images/ubuntu-box1-vm-disk1-1G --target vdb --persistent
 ```
 
 ![image](https://user-images.githubusercontent.com/83824403/178957231-6eaa0d1b-9c48-40d1-82bc-10ed110234b8.png)
 
 
 
+- Sang bên VM đã nhận đủ 1G
+
+![image](https://user-images.githubusercontent.com/83824403/178957438-578e7c1c-a956-4542-ac44-431d4d8eb12b.png)
 
 
 - Remove disk from VM :
 
 
 ```
-virsh detach-disk centos7 /var/lib/libvirt/images/disk1 --persistent --config --live
+virsh detach-disk centos7 /var/lib/libvirt/images/ubuntu-box1-vm-disk1-1G --persistent --config --live
 ```
 
 
