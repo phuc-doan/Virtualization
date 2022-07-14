@@ -211,10 +211,7 @@ virsh detach-interface --domain [tên VM] --type [loại card mạng] --mac [đ�
 
 ```
 cd /var/lib/libvirt/images 
-virsh vol-create-as default disk1 1GB --format qcow2
-or
-qemu-img create -f qcow2 disk1 1GB 
-
+sudo qemu-img create -f raw centos-1G 1G
 ```
 
 - kiểm tra disk vừa tạo :
