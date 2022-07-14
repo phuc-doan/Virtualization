@@ -276,3 +276,9 @@ virsh detach-disk centos7 /var/lib/libvirt/images/ubuntu-box1-vm-disk1-1G --pers
 MIgrate offline : virsh migrate --offline --persistent centos7 quemu+ssh://virsh2@192.168.122.232/system
 
 Migrate live : virsh migrate --live centos7 quemu+ssh://virsh2@192.168.122.232/system
+
+
+## Reference: 
+https://www.cyberciti.biz/faq/how-to-add-disk-image-to-kvm-virtual-machine-with-virsh-command/
+https://news.cloud365.vn/su-dung-lenh-virsh-voi-kvm/
+https://blog.cloud365.vn/linux/cheatsheet-virsh/
