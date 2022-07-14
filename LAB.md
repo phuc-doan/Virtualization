@@ -96,11 +96,11 @@ virsh # vcpupin centos7
 ```
 
 - Thực hiện pinning CPU ( cú pháp sau pinning Vcpu ID 0 -> Physical CPU ID 0, Vcpu ID 1 -> Physical CPU ID 1 )
+```
 
-**
 virsh # vcpupin centos7 0 0
 virsh # vcpupin centos7 1 1
-**
+```
 
 
 - Kiểm tra lại :
