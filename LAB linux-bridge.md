@@ -25,16 +25,19 @@
 
 ### Bước 1: Tạo switch ảo phucdv. Nếu đã tồn tại có thể xóa switch này đi và tạo lại:
 
+```
 brctl delbr phucdv # xóa đi nếu đã tồn tại
 
 brctl addbr phucdv # tạo mới
+```
 
 ### Bước 2: Gán ens33 vào swicth phucdv
 
+```
 brctl addif phucdv ens33
 
 brctl stp phucdv on # enable tính năng STP nếu cần
-
+```
 
 ![image](https://user-images.githubusercontent.com/83824403/179002021-0ba050a7-209d-4b4d-bfe1-c9beafc35142.png)
 
@@ -44,28 +47,32 @@ brctl stp phucdv on # enable tính năng STP nếu cần
 Ta có thể cấu hình xin cấp phát IP cho NIC này sử dụng command hoặc cấu hình trong file /etc/network/interfaces để giữ cấu hình cho switch ảo sau khi khởi động lại:
 
 Cấu hình bằng command:
-
+```
 ifconfig éns33 0 # xóa IP của eth1
 
 dhclient phucdv
-
+```
 Cấu hình trong file /etc/network/interfaces: Nếu trước đó trong file /etc/network/interfaces đã cấu hình cho NIC ens33, ta phải comment lại cấu hình đó hoặc xóa cấu hình đó đi và thay bằng các dòng cấu hình sau:
 
 ![image](https://user-images.githubusercontent.com/83824403/179001841-8c4906f9-be0b-4216-b38b-49fa046bae76.png)
 
-
+```
 auto phucdv
 iface phucdv inet dhcp
 bridge_ports phucdv
 bridge_stp on
 bridge_fd 0
 bridge_maxwait 0
+```
 
 ### Bước 4: Khởi động lại các card mạng và kiểm tra lại cấu hình bridge:
 
+```
 ifdown -a && ifup -a # khởi động lại tất cả các NIC
 
 brctl show # kiểm tra cấu hình switch ảo
+```
+
 
 ![image](https://user-images.githubusercontent.com/83824403/179002269-b3eb9493-f002-4822-81cb-d26dfdd86d2f.png)
 
@@ -101,6 +108,6 @@ brctl show # kiểm tra cấu hình switch ảo
 ![image](https://user-images.githubusercontent.com/83824403/179003758-17776a65-95f6-4703-ab5b-25c38d4bc92d.png)
 
 
-
+- Lúc này các VM kết nối với bridge `phucdv` đã có thể ra internet thoải mái
 
 
