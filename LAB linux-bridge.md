@@ -20,8 +20,9 @@
 | brctl stp [namebr] on | Bật STP 
 | brctl stp [namebr] off | Tắt STP 
 
+![image](https://user-images.githubusercontent.com/83824403/179008688-ad4b4b95-0840-449e-a03e-33450315c6d8.png)
 
-![image](https://user-images.githubusercontent.com/83824403/178926109-e2932395-906e-4d03-b9fc-c16bc0f1e7e7.png)
+
 
 ### Bước 1: Tạo switch ảo phucdv. Nếu đã tồn tại có thể xóa switch này đi và tạo lại:
 
@@ -44,17 +45,20 @@ brctl stp phucdv on # enable tính năng STP nếu cần
 
 ### Bước 3: Khi tạo một switch mới phucdv, trên máy host sẽ xuất hiện thêm 1 NIC ảo trùng tên switch đó (phucdv).
 
+![image](https://user-images.githubusercontent.com/83824403/179004448-9feaaaa3-643d-4055-b850-aaaeff27bb86.png)
+
+
 Ta có thể cấu hình xin cấp phát IP cho NIC này sử dụng command hoặc cấu hình trong file /etc/network/interfaces để giữ cấu hình cho switch ảo sau khi khởi động lại:
 
 Cấu hình bằng command:
 ```
-ifconfig éns33 0 # xóa IP của eth1
+ifconfig ens33 0 # xóa IP của ens33
 
 dhclient phucdv
 ```
 Cấu hình trong file /etc/network/interfaces: Nếu trước đó trong file /etc/network/interfaces đã cấu hình cho NIC ens33, ta phải comment lại cấu hình đó hoặc xóa cấu hình đó đi và thay bằng các dòng cấu hình sau:
 
-![image](https://user-images.githubusercontent.com/83824403/179001841-8c4906f9-be0b-4216-b38b-49fa046bae76.png)
+
 
 ```
 auto phucdv
@@ -74,7 +78,7 @@ brctl show # kiểm tra cấu hình switch ảo
 ```
 
 
-![image](https://user-images.githubusercontent.com/83824403/179002269-b3eb9493-f002-4822-81cb-d26dfdd86d2f.png)
+
 
 
 
@@ -86,12 +90,13 @@ brctl show # kiểm tra cấu hình switch ảo
 
 
 
-![image](https://user-images.githubusercontent.com/83824403/179001841-8c4906f9-be0b-4216-b38b-49fa046bae76.png)
 
 
 
 
-- Để check được card `bridge` đã ra được internet chưa thì chúng ta sẽ tắt int ens37, int ens33 lúc này đã cắm vào bridge phucdv nên hiện tại server chỉ còn bridge hoạt động
+- Để check được card `bridge` đã ra được internet chưa thì chúng ta sẽ tắt interface ens37 và inteface ens33 lúc này đã cắm vào bridge `phucdv` nên hiện tại server chỉ còn bridge hoạt động
+
+
 - ping từ local đến dải của `phucdv`
 
 ![image](https://user-images.githubusercontent.com/83824403/179003117-56550750-f37e-4b8f-8328-98dce16a453b.png)
@@ -100,7 +105,10 @@ brctl show # kiểm tra cấu hình switch ảo
 
 ![image](https://user-images.githubusercontent.com/83824403/179003313-868ce7a9-8e29-43bc-9979-9aa7e928bfcb.png)
 
+
 - Show route table xem có route ra internet qua bridge `phucdv` chưa 
+
+
 ![image](https://user-images.githubusercontent.com/83824403/179003584-0a08d4f0-6856-4a68-af7e-b33e7e49edef.png)
 
 - Traceroute ra internet xem gói tin có đẩy qua GW `172.16.2.2` của bridge `phucdv` chưa
